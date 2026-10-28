@@ -80,7 +80,7 @@ a { color: inherit; text-decoration: none; }
   opacity: .42;
   pointer-events: none;
 }
-.hero-copy { order: 1; position: relative; z-index: 2; flex: 1 1 0; max-width: none; }
+.hero-content { order: 1; position: relative; z-index: 2; flex: 1 1 0; max-width: none; text-align: left; }
 .eyebrow {
   display: table;
   margin: 0 0 13px;
@@ -120,8 +120,8 @@ h1 span, h2 span { color: #d3a096; }
   font-weight: 700;
 }
 .social-links a:first-child { background: var(--pink); color: var(--white); }
-.hero-photo { order: 2; flex: 0 0 40%; align-self: center; z-index: 1; height: 350px; width: min(100%, 340px); }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; border-radius: 4px; }
+.hero-image-container { order: 2; flex: 0 0 40%; align-self: center; z-index: 1; height: 350px; width: min(100%, 340px); margin-left: auto; }
+.hero-image-container img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; border-radius: 4px; }
 .hero-swoosh {
   position: absolute;
   width: 290px;
@@ -248,15 +248,15 @@ h1 span, h2 span { color: #d3a096; }
   .header-button { min-height: 36px; min-width: auto; padding: 0 14px; }
   .section-wrap { width: min(100% - 32px, 600px); }
   .hero { min-height: 350px; gap: 0; padding: 26px 3% 18px; }
-  .hero-photo { flex-basis: 38%; height: 285px; }
+  .hero-image-container { flex-basis: 38%; height: 285px; }
   .hero-swoosh { right: -185px; }
   .about { gap: 25px; padding-top: 42px; padding-bottom: 42px; }
   .section-heading { gap: 20px; }
 }
 @media (max-width: 540px) {
   .hero { flex-direction: row; min-height: 350px; gap: 8px; padding: 30px 4% 22px; }
-  .hero-copy { order: 1; flex: 1 1 60%; min-width: 0; max-width: 60%; padding-bottom: 0; }
-  .hero-photo { position: relative; order: 2; left: auto; right: auto; bottom: auto; flex: 0 0 38%; width: 38%; height: 230px; opacity: 1; }
+  .hero-content { order: 1; flex: 1 1 60%; min-width: 0; max-width: 60%; padding-bottom: 0; }
+  .hero-image-container { position: relative; order: 2; left: auto; right: auto; bottom: auto; flex: 0 0 38%; width: 38%; height: 230px; opacity: 1; }
   .hero h1 { font-size: clamp(24px, 7vw, 31px); }
   .hero h2 { font-size: 16px; }
   .hero .intro-text { font-size: 11px; }
