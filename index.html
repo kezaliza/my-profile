@@ -14,6 +14,7 @@
       <a class="nav-current" href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#services">Features</a>
+      <a href="#skills">My Skills</a>
       <a href="#portfolio">Portfolio</a>
       <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
@@ -32,9 +33,9 @@
         <div class="social-links" aria-label="Social links">
           <a href="https://www.facebook.com/keza.liza.71" aria-label="Facebook" target="_blank" rel="noopener noreferrer">f</a>
           <a href="https://www.instagram.com/k.e.z.a_l.i.z.a?stkn=MXdlN2VhcmMwejMxbA%3D%3D&amp;utm_source=qr" aria-label="Instagram" target="_blank" rel="noopener noreferrer">◎</a>
-          <a href="#contact" aria-label="LinkedIn">in</a>
+          <a href="#https://www.linkedin.com/in/keza-liza-58833b394/" aria-label="LinkedIn">in</a>
           <a href="#contact" aria-label="Twitter">♥</a>
-          <a href="#contact" aria-label="Email">@</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kezaliza379@gmail.com" target="_blank" aria-label="Email">@</a
         </div>
       </div>
       <div class="hero-photo">
@@ -96,6 +97,57 @@ I provide guidance and support with visa applications, , prepare the necessary d
       </div>
     </section>
 
+    <section class="skills section-wrap" id="skills">
+      <p class="eyebrow">My skills</p>
+      <h2>MY KNOWLEDG</h2>
+      <p class="section-description centered">Explore my certificate and the skills I have developed.</p>
+      <details class="knowledge-card">
+        <summary class="knowledge-summary">
+          <span class="certificate-icon" aria-hidden="true">✓</span>
+          <span class="certificate-copy">
+            <span class="knowledge-title">My Certificates &amp; Diploma</span>
+            <span class="knowledge-description">Open to view my documents and add a certificate.</span>
+          </span>
+          <span class="knowledge-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="knowledge-content">
+          <div class="certificate-list" aria-label="Certificates and diplomas">
+            <div class="certificate-item">
+              <div class="certificate-icon" aria-hidden="true">✓</div>
+              <div class="certificate-copy">
+                <h3>My Certificate</h3>
+                <p>View or download my certificate.</p>
+              </div>
+              <div class="certificate-actions">
+                <a class="button button-outline" href="my%20celeteficat.pdf" target="_blank" rel="noopener noreferrer">View <span>↗</span></a>
+                <a class="button" href="my%20celeteficat.pdf" download>Download <span>↓</span></a>
+              </div>
+            </div>
+            <div class="certificate-item">
+              <div class="certificate-icon" aria-hidden="true">✓</div>
+              <div class="certificate-copy">
+                <h3>My Diploma</h3>
+                <p>View or download my diploma.</p>
+              </div>
+              <div class="certificate-actions">
+                <a class="button button-outline" href="diploma%20keza.pdf" target="_blank" rel="noopener noreferrer">View <span>↗</span></a>
+                <a class="button" href="diploma%20keza.pdf" download>Download <span>↓</span></a>
+              </div>
+            </div>
+          </div>
+          <div class="certificate-manager">
+            <div class="certificate-manager-copy">
+              <p>Select one or more PDF or image files. Added files are saved in this browser on this device.</p>
+            </div>
+            <label class="button add-certificate-button" for="certificate-upload" aria-label="Add certificate" title="Add certificate"><span aria-hidden="true">+</span></label>
+            <input class="visually-hidden" id="certificate-upload" type="file" accept=".pdf,application/pdf,image/*" multiple disabled>
+            <p class="certificate-status" id="certificate-status" role="status" aria-live="polite">Loading saved certificates…</p>
+            <div class="added-certificates" id="added-certificates" aria-label="Added certificates"></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
     <section class="portfolio section-wrap" id="portfolio">
       <p class="eyebrow">Selected work</p>
       <h2>Sample of works<br><span>I can do</span></h2>
@@ -151,6 +203,156 @@ I provide guidance and support with visa applications, , prepare the necessary d
       </div>
     </section>
   </main>
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+  <script>
+    const certificateInput = document.getElementById('certificate-upload');
+    const certificateStatus = document.getElementById('certificate-status');
+    const addedCertificates = document.getElementById('added-certificates');
+    const certificateDatabaseName = 'keza-portfolio-certificates';
+    const certificateObjectUrls = new Map();
+
+    function openCertificateDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(certificateDatabaseName, 1);
+        request.onupgradeneeded = () => {
+          request.result.createObjectStore('certificates', { keyPath: 'id' });
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error || new Error('Could not open certificate storage.'));
+      });
+    }
+
+    function createCertificateRow(certificate, database, saved) {
+      const objectUrl = URL.createObjectURL(certificate.blob);
+      if (saved) certificateObjectUrls.set(certificate.id, objectUrl);
+
+      const row = document.createElement('div');
+      row.className = 'certificate-item added-certificate';
+
+      const icon = document.createElement('div');
+      icon.className = 'certificate-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = '✓';
+
+      const copy = document.createElement('div');
+      copy.className = 'certificate-copy';
+      const title = document.createElement('h3');
+      title.textContent = certificate.name;
+      const description = document.createElement('p');
+      description.textContent = 'Added certificate';
+      copy.append(title, description);
+
+      const actions = document.createElement('div');
+      actions.className = 'certificate-actions';
+      const viewLink = document.createElement('a');
+      viewLink.className = 'button button-outline';
+      viewLink.href = objectUrl;
+      viewLink.target = '_blank';
+      viewLink.rel = 'noopener noreferrer';
+      viewLink.textContent = 'View ↗';
+      const downloadLink = document.createElement('a');
+      downloadLink.className = 'button';
+      downloadLink.href = objectUrl;
+      downloadLink.download = certificate.name;
+      downloadLink.textContent = 'Download ↓';
+      actions.append(viewLink, downloadLink);
+
+      const removeButton = document.createElement('button');
+      removeButton.className = 'remove-certificate';
+      removeButton.type = 'button';
+      removeButton.textContent = 'Remove';
+      removeButton.setAttribute('aria-label', `Remove ${certificate.name}`);
+      removeButton.addEventListener('click', async () => {
+        try {
+          const transaction = database.transaction('certificates', 'readwrite');
+          transaction.objectStore('certificates').delete(certificate.id);
+          transaction.oncomplete = () => {
+            URL.revokeObjectURL(objectUrl);
+            certificateObjectUrls.delete(certificate.id);
+            row.remove();
+            certificateStatus.textContent = 'Certificate removed from this browser.';
+          };
+          transaction.onerror = () => {
+            certificateStatus.textContent = 'Could not remove this certificate. Please try again.';
+          };
+        } catch (error) {
+          certificateStatus.textContent = `Could not remove this certificate: ${error.message}`;
+        }
+      });
+
+      row.append(icon, copy, actions, removeButton);
+      addedCertificates.append(row);
+    }
+
+    async function loadSavedCertificates() {
+      try {
+        if (!('indexedDB' in window)) throw new Error('This browser does not support saved certificates.');
+        const database = await openCertificateDatabase();
+        const transaction = database.transaction('certificates', 'readonly');
+        const request = transaction.objectStore('certificates').getAll();
+        request.onsuccess = () => {
+          request.result.forEach(certificate => createCertificateRow(certificate, database, true));
+          certificateInput.disabled = false;
+          certificateStatus.textContent = 'Added certificates are saved in this browser on this device.';
+        };
+        request.onerror = () => {
+          certificateStatus.textContent = 'Could not load saved certificates. Please refresh the page.';
+        };
+
+        certificateInput.addEventListener('change', async () => {
+          const files = Array.from(certificateInput.files || []);
+          if (!files.length) return;
+
+          let addedCount = 0;
+          const errors = [];
+          for (const file of files) {
+            if (file.type !== 'application/pdf' && !file.type.startsWith('image/')) {
+              errors.push(`${file.name}: choose a PDF or image.`);
+              continue;
+            }
+
+            const certificate = {
+              id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+              name: file.name,
+              blob: file
+            };
+            try {
+              const saveTransaction = database.transaction('certificates', 'readwrite');
+              saveTransaction.objectStore('certificates').add(certificate);
+              await new Promise((resolve, reject) => {
+                saveTransaction.oncomplete = resolve;
+                saveTransaction.onerror = () => reject(saveTransaction.error || new Error('Could not save this file.'));
+              });
+              createCertificateRow(certificate, database, true);
+              addedCount += 1;
+            } catch (error) {
+              errors.push(`${file.name}: ${error.message}`);
+            }
+          }
+
+          certificateStatus.textContent = errors.length
+            ? `${addedCount} certificate(s) added. ${errors.join(' ')}`
+            : `${addedCount} certificate(s) saved in this browser.`;
+          certificateInput.value = '';
+        });
+      } catch (error) {
+        certificateStatus.textContent = `Certificate storage is unavailable: ${error.message}`;
+      }
+    }
+
+    loadSavedCertificates();
+  </script>
 
   <footer class="site-footer">
     <a class="footer-name" href="#home">Keza Liza</a>
